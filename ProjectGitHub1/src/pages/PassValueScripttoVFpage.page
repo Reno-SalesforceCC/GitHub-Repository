@@ -1,0 +1,9 @@
+<apex:page >
+	<script>
+        var myString = 'Hello';
+        jQuery('[id$=myPlaceholder]').text(myString);    
+    </script>
+	<apex:form >
+		<apex:outputText id="myPlaceholder" value="" />
+	</apex:form>
+</apex:page>

@@ -1,0 +1,38 @@
+<apex:page controller="Dyna_PrepareTemplate" showHeader="false"
+	standardStylesheets="false" sidebar="false" action="{!renderTemplate}"
+	renderAs="{!chooserender}">
+	<apex:includeScript value="{!URLFOR($Resource.SalesforceCOEDynaTool_STR, 'SalesforceCOE_DynaTool_STR/Js/jquery-2.2.1.min.js')}" />
+	<apex:includeScript value="{!URLFOR($Resource.SalesforceCOEDynaTool_STR, 'SalesforceCOE_DynaTool_STR/Js/common.js')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.SalesforceCOEDynaTool_STR, 'SalesforceCOE_DynaTool_STR/Css/basic.css')}" />
+
+	<apex:form id="renderContentForm">
+		<div id="headerContent"
+			style='border: bottom 1px solid; height: 10%; text-align: center;'>
+			<apex:commandButton action="{!saveTemplate}" value="{!$Label.SAVE}"
+				onclick="return assignTemplateVal('Preview');" />
+			&nbsp;
+			<apex:commandButton action="{!saveTemplate}"
+				value="{!$Label.PRINT_L}"
+				onclick="return assignTemplateVal('Print');" />
+			&nbsp;
+			<apex:commandButton action="{!saveTemplate}"
+				value="{!$Label.VIEWASPDF}"
+				onclick="return assignTemplateVal('asPdf');" />
+			<br />
+		</div>
+		<div id='mainContent'>
+			<apex:outputText id="htmlText" value="{!htmlCode}" escape="false"></apex:outputText>
+			<div style="display: none;">
+				<apex:inputTextarea id="tmpVal" value="{!bTemplate.Html_body__c}" />
+				<input type="hidden" id="reqViewType" name="reqViewType"
+					value="Preview" />
+			</div>
+		</div>
+	</apex:form>
+	<script type="text/javascript">
+        var loadedViewType = "{!$CurrentPage.parameters.ptype}";
+        if (loadedViewType == 'Print') {
+            printdiv();
+        }
+    </script>
+</apex:page>

@@ -1,0 +1,25 @@
+<apex:page sidebar="false" standardController="COENameSpace1__ParentTest1__c"  extensions="COENameSpace1.PackageTest" wizard="false" > <!--renderAs="{!chooserender}"-->
+  <!-- Begin Default Content REMOVE THIS -->
+  
+  <apex:form >
+      <apex:pageBlock >
+          <h1>List of Templates</h1>
+          <br/><br/><br/>
+          <apex:commandButton onclick="window.open('/apex/URLRedirect_vfp1?param=asPDF','a','width=800,height=800')" 
+          image="{!URLFOR($Resource.COENameSpace1__SalesforceCOEDynaTool_STR,'SalesforceCOE_DynaTool_STR/Images/Tool_PDFIcon.png')}">
+
+  <!--    image="{!$Resource.Images,'Images/Tool_PDFIcon.png'}">
+            image="{!URLFOR($Resource.Images1,'Images2/Tool_PDFIcon.png')}" > 
+
+          <apex:image url="{!URLFOR($Resource.TestZip,'images/Bluehills.jpg')}" width="50" height="50"/>
+            image="{!$Resource.Print}" -->
+    
+          </apex:commandButton>
+           <!-- oncomplete="alert('2');" -->
+           <apex:outputText value="htmlCode">
+              <apex:actionSupport oncomplete="alert('3');" event="OnClick"/>
+           </apex:outputText>
+      </apex:pageBlock>
+  </apex:form>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

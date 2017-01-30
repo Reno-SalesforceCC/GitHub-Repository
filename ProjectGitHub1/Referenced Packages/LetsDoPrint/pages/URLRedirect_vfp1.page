@@ -1,0 +1,7 @@
+<apex:page controller="COENameSpace1.PackageTest"  renderAs="{!chooserender}">
+    <apex:form >
+        <apex:pageBlock >
+                  <h1>HTML Template====> PlaceHolders and Values</h1>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

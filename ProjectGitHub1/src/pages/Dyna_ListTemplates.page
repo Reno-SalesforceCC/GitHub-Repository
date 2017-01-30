@@ -1,0 +1,94 @@
+<apex:page controller="DynamicTemplates_CLS" id="thePage"
+	showHeader="false">
+	<script>
+     function navigate(baseObjectId, templateId, actionType) {
+        var url = window.location.href;//'{!$CurrentPage.URL}';
+        var res = url.split("/apex/");
+        var baseUrl = '';
+        if (res.length > 1) {
+            baseUrl = res[0];
+        }
+        //alert('url->' + url + '@@res.length' + res.length + '@@res[0]' + res[0]);
+        var dynaToolNameSpace = '{!toolNamespace}';
+        var prepareTemplateUrl = baseUrl + '/apex/'+ dynaToolNameSpace +'Dyna_PrepareTemplate?param=' + baseObjectId + '&tmpId=' + templateId + '&ptype=' + actionType;     
+        //alert(prepareTemplateUrl );
+        window.open(prepareTemplateUrl, 'a', 'scrollbars=1,resizable=1,width=800,height=800');
+        return false;
+        
+     }
+ </script>
+	<apex:form >
+		<apex:sectionHeader title="{!$Label.ListOfTemplates}" />
+		<apex:pageBlock >
+			<apex:outputPanel id="myPanel" rendered="{!temps.size > 0}">
+				<apex:pageMessages id="theMessages" />
+				<apex:pageBlockTable value="{!temps}" var="tmp" id="theTable"
+					rowClasses="odd,even" border="color:red">
+
+					<apex:column >
+						<br></br>
+						<apex:facet name="header">
+							<h2>{!$Label.Name}</h2>
+						</apex:facet>
+						<!--    <apex:commandLink value="{!tmp.name}" action="/{!tmp.id}"/> -->
+						<apex:outputText value="{!tmp.name}" />
+					</apex:column>
+					<apex:column >
+						<br></br>
+						<apex:facet name="header">{!$Label.Description}</apex:facet>
+
+						<apex:outputText value="{!tmp.Description__c}" />
+					</apex:column>
+					<apex:column >
+						<br></br>
+						<apex:facet name="header">{!$Label.Version}</apex:facet>
+
+						<apex:outputText value="{!tmp.Version__c}" />
+					</apex:column>
+
+					<apex:column >
+						<br></br>
+						<apex:facet name="header">{!$Label.CreatedDate}</apex:facet>
+						<apex:outputText value="{!tmp.CreatedDate}" />
+					</apex:column>
+					<apex:column >
+						<br></br>
+						<apex:facet name="header">{!$Label.Action}</apex:facet>
+						<apex:commandButton image="{!URLFOR($Resource.SalesforceCOEDynaTool_STR,'SalesforceCOE_DynaTool_STR/Images/Tool_PreviewIcon.png')}"
+							title="{!$Label.Generate_Template}"
+							onclick="return navigate('{!baseObjectId}', '{!tmp.id}', 'Preview');" />
+						<!-- <apex:commandButton image="{!URLFOR($Resource.SalesforceCOEDynaTool_STR,'SalesforceCOE_DynaTool_STR/Images/Tool_PrintIcon.png')}" title="Print" onclick="window.open('/apex/Dyna_PrepareTemplate?param=' + '{!baseObjectId}' + '&tmpId=' + '{!tmp.id}'+'&ptype#=Print','a','scrollbars=1,resizable=1,width=800,height=800');"/>-->
+						<!-- <apex:commandButton image="{!URLFOR($Resource.SalesforceCOEDynaTool_STR,'SalesforceCOE_DynaTool_STR/Images/Tool_PDFIcon.png')}" title="View as PDF"  onclick="window.open('/apex/Dyna_PrepareTemplate?param=' + '{!baseObjectId}' + '&tmpId=' + '{!tmp.id}'+'&ptype=asPdf','a','scrollbars=1,resizable=1,width=800,height=800');"/>  -->
+						<!-- <apex:commandButton image="{!URLFOR($Resource.SalesforceCOEDynaTool_STR,'SalesforceCOE_DynaTool_STR/Images/Tool_PDFIcon.png')}" title="View as PDF"  onclick="return navigate('{!baseObjectId}', '{!tmp.id}', 'asPdf');"/>  -->
+
+					</apex:column>
+					<apex:column >
+						<br></br>
+					</apex:column>
+				</apex:pageBlockTable>
+			</apex:outputPanel>
+			<apex:outputPanel rendered="{!temps.size == 0}">
+          No records found to this object.     
+   </apex:outputPanel>
+
+			<apex:pageBlockButtons location="both">
+				<apex:outputPanel id="myButtons">
+					<div style="width: 400px; text-align: center;">
+						<apex:commandButton action="{!Beginning}" title="Beginning"
+							value="<<" disabled="{!disablePrevious}"
+							reRender="myPanel,myButtons" />
+						<apex:commandButton action="{!Previous}" title="Previous"
+							value="<" disabled="{!disablePrevious}"
+							reRender="myPanel,myButtons" />
+						<apex:commandButton action="{!Next}" title="Next" value=">"
+							disabled="{!disableNext}" reRender="myPanel,myButtons" />
+						<apex:commandButton action="{!last}" title="last" value=">>"
+							disabled="{!disableNext}" reRender="myPanel,myButtons" />
+					</div>
+				</apex:outputPanel>
+			</apex:pageBlockButtons>
+
+		</apex:pageBlock>
+	</apex:form>
+
+</apex:page>
